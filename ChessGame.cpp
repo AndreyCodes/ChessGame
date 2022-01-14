@@ -7,7 +7,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1080, 1080), "ChessGame");
 	RenderSystem render(window);
 
-	Board b{render};
+	Board b{ render };
 
 	enum state
 	{
@@ -41,7 +41,9 @@ int main()
 			{
 				window.close();
 			}
-			if (current_state == state::pl1_choosing_pawn)
+			switch (current_state)
+			{
+			case state::pl1_choosing_pawn:
 			{
 				if (ev.type == sf::Event::EventType::MouseButtonPressed)
 				{
@@ -54,9 +56,6 @@ int main()
 								if (b.player_1[i].x == cursor.field_coord_clamp.x && b.player_1[i].y == cursor.field_coord_clamp.y)
 								{
 									render.add_UI_helper(UI_helperCell(cursor.field_coord_clamp.x, cursor.field_coord_clamp.y, UI_helperCell::color::yellow));//Создаем подсказку, какую пешку выбрал игрок
-									
-
-
 									player1.choosed_pawn.x = cursor.field_coord_clamp.x;
 									player1.choosed_pawn.y = cursor.field_coord_clamp.y;
 
@@ -113,12 +112,55 @@ int main()
 						}
 					}
 				}
+				break;
+			}
+			case state::pl1_choosing_way:
+			{
+				if (ev.type == sf::Event::EventType::MouseButtonPressed)
+				{
+					if (ev.mouseButton.button == sf::Mouse::Button::Left)
+					{
+						if (player1.choosed_pawn.x == cursor.field_coord.x and player1.choosed_pawn.y == cursor.field_coord.y)
+						{
+							render.remove_UI_helpers();
+							player1.available_ways.clear();
+							current_state = state::pl1_choosing_pawn;
+							break;
+						}
+						for (int i = 0; i < player1.available_ways.size(); ++i)
+						{
+							if (cursor.field_coord_clamp.x == player1.available_ways[i].x and cursor.field_coord_clamp.y == player1.available_ways[i].y)
+							{
+								b.space[player1.choosed_pawn.x][player1.choosed_pawn.y].player_1 = 0;
+								b.space[cursor.field_coord_clamp.x][cursor.field_coord_clamp.y].player_1 = 1;
+								for (auto& el : b.player_1)
+								{
+									if (el.x == player1.choosed_pawn.x and el.y == player1.choosed_pawn.y)
+									{
+										el.setPosition(cursor.field_coord_clamp.x, cursor.field_coord_clamp.y);
+										break;
+									}
+								}
+								render.remove_UI_helpers();
+								player1.available_ways.clear();
+								current_state = state::pl1_choosing_pawn;//CHANGE!
+								break;
+							}
+						}//break!
+
+
+					}
+				}
+
+			}
+
 			}
 
 
 
+
 		}
-		
+
 		//std::cout << cursor.raw.x << ' ' << cursor.raw.y << '\n';
 
 		render.update();
