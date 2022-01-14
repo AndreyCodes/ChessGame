@@ -27,6 +27,7 @@ UI_helperCell::UI_helperCell(int x, int y, color cl)
 	representation.setSize(sf::Vector2f(texture.getSize()));
 	representation.setPosition(sf::Vector2f{ (float)x * sizes::size_of_cell, (float)y * sizes::size_of_cell } + sizes::width_of_outline_of_field_vec);
 
+
 }
 UI_helperCell::operator sf::Drawable& ()
 {

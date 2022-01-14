@@ -29,9 +29,15 @@ void RenderSystem::add(IRenderable& some)
 	objs.push_back(&some);
 }
 
+
+
 void RenderSystem::add_UI_helper(UI_helperCell some)
 {
 	UI_helpers.push_back(some);
+}
+void RenderSystem::add_UI_helper(int x, int y, UI_helperCell::color c)
+{
+	UI_helpers.emplace_back(x, y, c);
 }
 
 void RenderSystem::remove_UI_helpers()

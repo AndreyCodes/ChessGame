@@ -20,7 +20,9 @@ public:
 
 	void add(IRenderable& some);
 
+	
 	void add_UI_helper(UI_helperCell some);
+	void add_UI_helper(int x, int y, UI_helperCell::color c);//emplace construct
 
 	void remove_UI_helpers();
 
