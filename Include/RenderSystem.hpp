@@ -2,12 +2,13 @@
 #include<vector>
 #include<SFML/Graphics.hpp>
 #include"IRenderable.hpp"
+#include"UI_helper.hpp"
 
 struct RenderSystem
 {
 protected:
 	std::vector<IRenderable*> objs;
-	std::vector<IRenderable*> UI_helpers;
+	std::vector<UI_helperCell> UI_helpers;
 	IRenderable* board_sprite;
 	sf::RenderWindow& window;
 public:
@@ -19,7 +20,7 @@ public:
 
 	void add(IRenderable& some);
 
-	void add_UI_helper(IRenderable& some);
+	void add_UI_helper(UI_helperCell some);
 
 	void remove_UI_helpers();
 

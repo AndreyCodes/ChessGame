@@ -25,6 +25,6 @@ public:
 	operator sf::Drawable& () override;
 
 	const static inline sf::Vector2f position_offset{ 32,8 };
-	const static inline sf::Texture default_white = [] {sf::Texture t; t.loadFromFile("gamedata/whitePawn.png"); return t; }();
+	const static inline sf::Texture default_white = [] {sf::Texture t; t.loadFromFile("gamedata/whitePawn.png"); return t; }();//produce some issue with sfml implementation of OpenGL
 	const static inline sf::Texture default_black = [] {sf::Texture t; t.loadFromFile("gamedata/blackPawn.png"); return t; }();
 };

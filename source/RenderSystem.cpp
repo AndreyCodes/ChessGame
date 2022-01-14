@@ -11,13 +11,14 @@ void RenderSystem::update()
 {
 	window.clear();
 	window.draw(*board_sprite);
+
+	for (auto& element : UI_helpers)
+	{
+		window.draw(element);
+	}
 	for (auto& element : objs)
 	{
 
-		window.draw(*element);
-	}
-	for (auto& element : UI_helpers)
-	{
 		window.draw(*element);
 	}
 	window.display();
@@ -28,9 +29,9 @@ void RenderSystem::add(IRenderable& some)
 	objs.push_back(&some);
 }
 
-void RenderSystem::add_UI_helper(IRenderable& some)
+void RenderSystem::add_UI_helper(UI_helperCell some)
 {
-	UI_helpers.push_back(&some);
+	UI_helpers.push_back(some);
 }
 
 void RenderSystem::remove_UI_helpers()
@@ -53,9 +54,9 @@ void RenderSystem::remove(IRenderable& some)
 			return;
 		}
 	}
-	for (int i = 0; i < UI_helpers.size(); ++i)
+	for (int i = 0; i < UI_helpers.size(); ++i)//shoul deprecate
 	{
-		if (UI_helpers[i] == &some)
+		if (&UI_helpers[i] == &some)
 		{
 			UI_helpers[i] = UI_helpers.back();
 			UI_helpers.pop_back();

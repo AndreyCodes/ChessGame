@@ -12,9 +12,10 @@ struct Board : IRenderable
 private:
 	struct Cell
 	{
-		bool player_1;
-		bool player_2;
+		bool player_1 = 0;
+		bool player_2 = 0;
 	};
+public://условно
 	Cell space[8][8];
 	//mb разделить
 	std::vector<Pawn> player_1;

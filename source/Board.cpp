@@ -15,7 +15,7 @@ Board::Board(RenderSystem& render)
 		for (int j = 5; j <= 7; ++j)
 		{
 			player_1.push_back(Pawn(i, j, Pawn::owner_tag::player_1));
-
+			space[i][j].player_1 = 1;
 		}
 	}
 	for (int i = 0; i <= 2; ++i)
@@ -23,7 +23,7 @@ Board::Board(RenderSystem& render)
 		for (int j = 0; j <= 2; ++j)
 		{
 			player_2.push_back(Pawn(i, j, Pawn::owner_tag::player_2));
-
+			space[i][j].player_2 = 1;
 		}
 	}
 	for (int i = 0; i < player_1.size(); ++i)
