@@ -54,7 +54,7 @@ int main()
 								if (b.player_1[i].x == cursor.field_coord_clamp.x && b.player_1[i].y == cursor.field_coord_clamp.y)
 								{
 									render.add_UI_helper(UI_helperCell(cursor.field_coord_clamp.x, cursor.field_coord_clamp.y, UI_helperCell::color::yellow));//Создаем подсказку, какую пешку выбрал игрок
-									//render.add_UI_helper(cursor.field_coord_clamp.x, cursor.field_coord_clamp.y, UI_helperCell::color::yellow);//Создаем подсказку, какую пешку выбрал игрок
+									
 
 
 									player1.choosed_pawn.x = cursor.field_coord_clamp.x;

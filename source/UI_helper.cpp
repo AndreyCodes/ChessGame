@@ -29,6 +29,12 @@ UI_helperCell::UI_helperCell(int x, int y, color cl)
 
 
 }
+UI_helperCell::UI_helperCell(const UI_helperCell& arg) : texture(arg.texture), representation(arg.representation)
+{
+	representation.setTexture(&texture);
+}
+
+
 UI_helperCell::operator sf::Drawable& ()
 {
 	return representation;

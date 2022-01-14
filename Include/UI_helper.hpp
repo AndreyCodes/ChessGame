@@ -15,5 +15,6 @@ struct UI_helperCell : IRenderable
 	};
 
 	UI_helperCell(int x, int y, color cl);
+	UI_helperCell(const UI_helperCell& arg);
 	operator sf::Drawable& () override;
 };
