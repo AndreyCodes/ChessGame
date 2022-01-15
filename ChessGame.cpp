@@ -21,13 +21,15 @@ int main()
 
 	struct player
 	{
-		struct choosedPawn
-		{
-			int x, y;
-		}choosed_pawn;
+		sf::Vector2i choosed_pawn;
 		std::vector<sf::Vector2i> available_ways;//Ходы, куда может игрок пойти
-
 	}player1;
+
+
+	struct ai
+	{
+
+	};
 
 
 
@@ -128,23 +130,44 @@ int main()
 							current_state = state::pl1_choosing_pawn;
 							break;
 						}
+
 						for (int i = 0; i < player1.available_ways.size(); ++i)
 						{
 							if (cursor.field_coord_clamp.x == player1.available_ways[i].x and cursor.field_coord_clamp.y == player1.available_ways[i].y)
 							{
+								for (auto& el : b.player_2)
+								{
+									if (el.x == player1.choosed_pawn.x && el.y == player1.choosed_pawn.y)
+									{
+										el.setPosition_as_default();
+										break;
+									}
+								}
+
 								b.space[player1.choosed_pawn.x][player1.choosed_pawn.y].player_1 = 0;
 								b.space[cursor.field_coord_clamp.x][cursor.field_coord_clamp.y].player_1 = 1;
 								for (auto& el : b.player_1)
 								{
 									if (el.x == player1.choosed_pawn.x and el.y == player1.choosed_pawn.y)
 									{
+										
 										el.setPosition(cursor.field_coord_clamp.x, cursor.field_coord_clamp.y);
+										for (auto& el_2 : b.player_2)
+										{
+											if (el_2.x == el.x and el_2.y == el.y)
+											{
+												el.setPosition_as_white();
+												el_2.setPosition_as_black();
+												break;
+											}
+										}
 										break;
 									}
 								}
+
 								break;
 							}
-						}//break!
+						}
 						render.remove_UI_helpers();
 						player1.available_ways.clear();
 						if (b.checkWinner())

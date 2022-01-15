@@ -28,6 +28,21 @@ void Pawn::setPosition(int x_, int y_) // set view and logic position
 	setPosition(sf::Vector2f(x, y) * (float)sizes::size_of_cell);//
 }
 
+void Pawn::setPosition_as_white()
+{
+	representation.move(position_offset_white);
+}
+
+void Pawn::setPosition_as_black()
+{
+	representation.move(position_offset_black);
+}
+
+void Pawn::setPosition_as_default()
+{
+	setPosition(x, y);
+}
+
 Pawn::operator sf::Drawable& ()
 {
 	return representation;
