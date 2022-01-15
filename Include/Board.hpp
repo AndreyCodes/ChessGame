@@ -28,5 +28,6 @@ public:
 public:
 	Board(RenderSystem& render);
 	bool checkWinner();
+	Cell& space_cell(sf::Vector2i);
 	operator sf::Drawable& () override;
 };

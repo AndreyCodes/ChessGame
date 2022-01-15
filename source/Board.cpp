@@ -63,6 +63,12 @@ bool Board::checkWinner()
 
 }
 
+Board::Cell& Board::space_cell(sf::Vector2i v)
+{
+	return space[v.x][v.y];
+}
+
+
 Board::operator sf::Drawable& ()
 {
 	return board_sprite;

@@ -149,11 +149,11 @@ int main()
 				{
 					if (ev.mouseButton.button == sf::Mouse::Button::Left)
 					{
-						if (b.space[cursor.field_coord_clamp.x][cursor.field_coord_clamp.y].player_1 == 1)//==1 излишне, но для читаемости
+						if (b.space_cell(cursor.field_coord_clamp).player_1 == 1)//==1 излишне, но для читаемости
 						{
 							for (int i = 0; i < b.player_1.size(); ++i)
 							{
-								if (b.player_1[i].position == cursor.field_coord_clamp)
+								if (b.player_1[i].position == cursor.field_coord_clamp)//Мышь наведена на i пешку
 								{
 									render.add_UI_helper(UI_helperCell(cursor.field_coord_clamp.x, cursor.field_coord_clamp.y, UI_helperCell::color::yellow));//Создаем подсказку, какую пешку выбрал игрок
 									player1.choosed_pawn = cursor.field_coord_clamp;
@@ -161,7 +161,7 @@ int main()
 
 
 									//test available ways
-									auto test = [&b, &player1]
+									auto find_available_ways_for_choosed_pawn = [&b, &player1]
 									{
 										int x = player1.choosed_pawn.x;
 										int y = player1.choosed_pawn.y;
@@ -198,21 +198,21 @@ int main()
 												player1.available_ways.push_back({ x,y - 1 });
 											}
 										}
-									}; test();//Проверяем.
+									}; find_available_ways_for_choosed_pawn();//Проверяем.
 
 									for (auto& el : player1.available_ways)
 									{
-										render.add_UI_helper(UI_helperCell(el.x, el.y, UI_helperCell::color::green));
+										render.add_UI_helper(UI_helperCell(el.x, el.y, UI_helperCell::color::green));//добавляем подсказки для доступных ходов
 									}
 									current_state = state::pl1_choosing_way;
 
-									break;
+									break;//выход из цикла;
 								}
 							}
 						}
 					}
 				}
-				break;
+				break;//выхода из case
 			}
 			case state::pl1_choosing_way:
 			{
@@ -220,19 +220,22 @@ int main()
 				{
 					if (ev.mouseButton.button == sf::Mouse::Button::Left)
 					{
-						if (player1.choosed_pawn == cursor.field_coord)
+						if (player1.choosed_pawn == cursor.field_coord)//Повторное нажатие на выбранную пешку - отменяет выбор
 						{
 							render.remove_UI_helpers();
 							player1.available_ways.clear();
 							current_state = state::pl1_choosing_pawn;
-							break;
+							break;//выход из case
 						}
 
+
+						bool correct_click = false;
 						for (int i = 0; i < player1.available_ways.size(); ++i)
 						{
-							if (cursor.field_coord_clamp == player1.available_ways[i])
+							if (cursor.field_coord_clamp == player1.available_ways[i])//нашли куда перемещать пешку
 							{
-								for (auto& el : b.player_2)
+								correct_click = true;
+								for (auto& el : b.player_2)//Восстанавливаем позицию текстуры у чужой пешки, если она стоит в той же, что и выбранная для перемещения
 								{
 									if (el.position == player1.choosed_pawn)
 									{
@@ -241,16 +244,17 @@ int main()
 									}
 								}
 
-								b.space[player1.choosed_pawn.x][player1.choosed_pawn.y].player_1 = 0;
-								b.space[cursor.field_coord_clamp.x][cursor.field_coord_clamp.y].player_1 = 1;
 
-								for (auto& el : b.player_1)
+								b.space_cell(player1.choosed_pawn).player_1 = 0; 
+								b.space_cell(cursor.field_coord_clamp).player_1 = 1;
+
+								for (auto& el : b.player_1)//ищем объект пешки, которую будем перемещать.
 								{
 									if (el.position == player1.choosed_pawn)
 									{
 										
 										el.setPosition(cursor.field_coord_clamp);
-										for (auto& el_2 : b.player_2)
+										for (auto& el_2 : b.player_2)//если в позиции две пешки, то делаем сдвиг их текстуры
 										{
 											if (el_2.position == el.position)
 											{
@@ -262,10 +266,16 @@ int main()
 										break;
 									}
 								}
-
 								break;
 							}
+
 						}
+						if (!correct_click)
+						{
+							break;
+						}
+
+
 						render.remove_UI_helpers();
 						player1.available_ways.clear();
 						if (b.checkWinner())
@@ -285,35 +295,45 @@ int main()
 				break;
 
 			}
-			case state::pl2_choosing_pawn:
-			{
-				ai.choosePawn();
-				render.add_UI_helper(ai.choosed_pawn->first->position.x, ai.choosed_pawn->first->position.y, UI_helperCell::color::yellow);
-				current_state = pl2_choosing_way;
-				break;
+
+
 			}
-			case state::pl2_choosing_way:
+		}
+		switch (current_state)
+		{
+		case state::pl2_choosing_pawn:
+		{
+			ai.choosePawn();
+			render.add_UI_helper(ai.choosed_pawn->first->position.x, ai.choosed_pawn->first->position.y, UI_helperCell::color::yellow);
+			current_state = pl2_choosing_way;
+			break;
+		}
+		case state::pl2_choosing_way:
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(400));//emulation of thinking ai
+
+			for (auto& el : b.player_1)
 			{
-				ai.choosed_pawn->first->setPosition(ai.choosed_pawn->second.front());//
-				b.space[ai.choosed_pawn->first->position.x][ai.choosed_pawn->first->position.y].player_2 = 1;
-				if (b.space[ai.choosed_pawn->first->position.x][ai.choosed_pawn->first->position.y].player_1 == 1)
+				if (el.position == ai.choosed_pawn->first->position)
 				{
-					ai.choosed_pawn->first->setPosition_as_black();
+					el.setPosition_as_default();
 				}
-				render.remove_UI_helpers();
-				current_state = pl1_choosing_pawn;
-				break;
 			}
 
 
+			ai.choosed_pawn->first->setPosition(ai.choosed_pawn->second.front());//not best way ???
+			b.space_cell(ai.choosed_pawn->first->position).player_2 = 1;
+			if (b.space_cell(ai.choosed_pawn->first->position).player_1 == 1)
+			{
+				ai.choosed_pawn->first->setPosition_as_black();
 			}
-
-
-
-
+			render.remove_UI_helpers();
+			current_state = pl1_choosing_pawn;
+			break;
+		}
 		}
 
-		//std::cout << cursor.raw.x << ' ' << cursor.raw.y << '\n';
+
 
 		render.update();
 
