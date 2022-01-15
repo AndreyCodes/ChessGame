@@ -177,7 +177,7 @@ int main()
 						}
 						else
 						{
-							current_state = state::pl1_choosing_pawn;//CHANGE!
+							current_state = state::pl2_choosing_pawn;//CHANGE!
 						}
 						break;
 
@@ -186,6 +186,7 @@ int main()
 				}
 
 			}
+
 
 			}
 

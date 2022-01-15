@@ -15,9 +15,9 @@ private:
 		bool player_1 = 0;
 		bool player_2 = 0;
 	};
-public://условно
+public:
 	Cell space[8][8];
-	//mb разделить
+	
 	std::vector<Pawn> player_1;
 	std::vector<Pawn> player_2;
 
