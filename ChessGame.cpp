@@ -15,6 +15,7 @@ int main()
 		pl1_choosing_way,
 		pl2_choosing_pawn,
 		pl2_choosing_way,
+		finish,
 	};
 	state current_state = state::pl1_choosing_pawn;
 
@@ -141,12 +142,20 @@ int main()
 										break;
 									}
 								}
-								render.remove_UI_helpers();
-								player1.available_ways.clear();
-								current_state = state::pl1_choosing_pawn;//CHANGE!
 								break;
 							}
 						}//break!
+						render.remove_UI_helpers();
+						player1.available_ways.clear();
+						if (b.checkWinner())
+						{
+							current_state = state::finish;
+						}
+						else
+						{
+							current_state = state::pl1_choosing_pawn;//CHANGE!
+						}
+						break;
 
 
 					}

@@ -27,5 +27,6 @@ public://условно
 
 public:
 	Board(RenderSystem& render);
+	bool checkWinner();
 	operator sf::Drawable& () override;
 };

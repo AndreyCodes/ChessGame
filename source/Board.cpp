@@ -35,6 +35,34 @@ Board::Board(RenderSystem& render)
 
 }
 
+
+bool Board::checkWinner()
+{
+
+	int count = 0;
+	for (int i = 0; i < 8; ++i)
+	{
+		for (int j = 0; j < 8; ++j)
+		{
+			if (space[i][j].player_1 == 1 and space[i][j].player_2 == 1)//==1 для читаемости, а компилятор оптимизирует
+			{
+				++count;
+			}
+
+		}
+	}
+	if (count == 9)
+	{
+		return true;
+	}
+	else///для максимальной читамости
+	{
+		return false;
+	}
+	
+
+}
+
 Board::operator sf::Drawable& ()
 {
 	return board_sprite;
