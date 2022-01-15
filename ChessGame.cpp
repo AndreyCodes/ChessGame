@@ -310,15 +310,18 @@ int main()
 		}
 		case state::pl2_choosing_way:
 		{
-			std::this_thread::sleep_for(std::chrono::milliseconds(400));//emulation of thinking ai
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));//emulation of thinking ai
 
-			for (auto& el : b.player_1)
+			for (auto& el : b.player_1)//Восстанавливаем положение текстуры пешки, которая стояла вместе;
 			{
 				if (el.position == ai.choosed_pawn->first->position)
 				{
 					el.setPosition_as_default();
 				}
 			}
+
+			b.space_cell(ai.choosed_pawn->first->position).player_2 = 0;
+			b.space_cell(ai.choosed_pawn->second.front()).player_2 = 1;
 
 
 			ai.choosed_pawn->first->setPosition(ai.choosed_pawn->second.front());//not best way ???
@@ -327,6 +330,8 @@ int main()
 			{
 				ai.choosed_pawn->first->setPosition_as_black();
 			}
+
+
 			render.remove_UI_helpers();
 			current_state = pl1_choosing_pawn;
 			break;
@@ -336,7 +341,7 @@ int main()
 
 
 		render.update();
-
+		b.debug();
 
 	}
 }

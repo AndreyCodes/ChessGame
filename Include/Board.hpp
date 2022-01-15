@@ -30,4 +30,5 @@ public:
 	bool checkWinner();
 	Cell& space_cell(sf::Vector2i);
 	operator sf::Drawable& () override;
+	void debug();
 };

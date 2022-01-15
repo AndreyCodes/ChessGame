@@ -1,5 +1,5 @@
 #include"../Include/Board.hpp"
-
+#include<iostream>
 Board::Board(RenderSystem& render)
 {
 	sf::Texture t; t.loadFromFile("gamedata/Board.png");
@@ -72,5 +72,23 @@ Board::Cell& Board::space_cell(sf::Vector2i v)
 Board::operator sf::Drawable& ()
 {
 	return board_sprite;
+}
+void Board::debug()
+{
+	std::cout << '\f';
+	for (int i = 0; i < 8; ++i)
+	{
+		for (int j = 0; j < 8; ++j)
+		{
+			std::cout << space[j][i].player_1 << '/' << space[j][i].player_2 << ' ';
+		}
+		std::cout << "\n";
+	}
+	for (int i = 0; i < 8; ++i)
+	{
+		std::cout << "\033[A";
+	}
+	std::cout << '\r';
+
 }
 
