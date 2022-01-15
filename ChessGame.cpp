@@ -29,7 +29,7 @@ int main()
 	struct ai_player
 	{
 		ai_player(Board& ref_): ref{ref_}{}
-		Pawn* choosed_pawn;
+		std::pair<Pawn*, std::vector<sf::Vector2i>>* choosed_pawn;
 		std::vector < std::pair<Pawn*, std::vector<sf::Vector2i>>> available_ways;
 		Board& ref;
 		void choosePawn()
@@ -102,7 +102,7 @@ int main()
 							{
 								if (ref.space[i][j].player_1 == 1 and way.x == i and way.y == j)//для читаемости
 								{
-									return el.first;
+									return &el;
 								}
 							}
 						}
@@ -115,12 +115,7 @@ int main()
 					auto pawn_id = rd() % 9;
 					if (!available_ways[pawn_id].second.empty())
 					{
-						for (auto& el : available_ways)
-						{
-							std::cout << el.second.size() << ' ';
-						}
-						std::cout << '\n';
-						return available_ways[pawn_id].first;
+						return &available_ways[pawn_id];
 					}
 
 				}
@@ -293,8 +288,21 @@ int main()
 			case state::pl2_choosing_pawn:
 			{
 				ai.choosePawn();
-				render.add_UI_helper(ai.choosed_pawn->position.x, ai.choosed_pawn->position.y, UI_helperCell::color::yellow);
+				render.add_UI_helper(ai.choosed_pawn->first->position.x, ai.choosed_pawn->first->position.y, UI_helperCell::color::yellow);
+				current_state = pl2_choosing_way;
+				break;
+			}
+			case state::pl2_choosing_way:
+			{
+				ai.choosed_pawn->first->setPosition(ai.choosed_pawn->second.front());//
+				b.space[ai.choosed_pawn->first->position.x][ai.choosed_pawn->first->position.y].player_2 = 1;
+				if (b.space[ai.choosed_pawn->first->position.x][ai.choosed_pawn->first->position.y].player_1 == 1)
+				{
+					ai.choosed_pawn->first->setPosition_as_black();
+				}
+				render.remove_UI_helpers();
 				current_state = pl1_choosing_pawn;
+				break;
 			}
 
 
