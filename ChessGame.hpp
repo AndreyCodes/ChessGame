@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include<algorithm>
+#include<random>
 #include<SFML/Graphics.hpp>
 
 #include"Include/Board.hpp"
