@@ -56,11 +56,11 @@ int main()
 						{
 							for (int i = 0; i < b.player_1.size(); ++i)
 							{
-								if (b.player_1[i].x == cursor.field_coord_clamp.x && b.player_1[i].y == cursor.field_coord_clamp.y)
+								if (b.player_1[i].position == cursor.field_coord_clamp)
 								{
 									render.add_UI_helper(UI_helperCell(cursor.field_coord_clamp.x, cursor.field_coord_clamp.y, UI_helperCell::color::yellow));//Создаем подсказку, какую пешку выбрал игрок
-									player1.choosed_pawn.x = cursor.field_coord_clamp.x;
-									player1.choosed_pawn.y = cursor.field_coord_clamp.y;
+									player1.choosed_pawn = cursor.field_coord_clamp;
+
 
 
 									//test available ways
@@ -123,7 +123,7 @@ int main()
 				{
 					if (ev.mouseButton.button == sf::Mouse::Button::Left)
 					{
-						if (player1.choosed_pawn.x == cursor.field_coord.x and player1.choosed_pawn.y == cursor.field_coord.y)
+						if (player1.choosed_pawn == cursor.field_coord)
 						{
 							render.remove_UI_helpers();
 							player1.available_ways.clear();
@@ -133,11 +133,11 @@ int main()
 
 						for (int i = 0; i < player1.available_ways.size(); ++i)
 						{
-							if (cursor.field_coord_clamp.x == player1.available_ways[i].x and cursor.field_coord_clamp.y == player1.available_ways[i].y)
+							if (cursor.field_coord_clamp == player1.available_ways[i])
 							{
 								for (auto& el : b.player_2)
 								{
-									if (el.x == player1.choosed_pawn.x && el.y == player1.choosed_pawn.y)
+									if (el.position == player1.choosed_pawn)
 									{
 										el.setPosition_as_default();
 										break;
@@ -146,15 +146,16 @@ int main()
 
 								b.space[player1.choosed_pawn.x][player1.choosed_pawn.y].player_1 = 0;
 								b.space[cursor.field_coord_clamp.x][cursor.field_coord_clamp.y].player_1 = 1;
+
 								for (auto& el : b.player_1)
 								{
-									if (el.x == player1.choosed_pawn.x and el.y == player1.choosed_pawn.y)
+									if (el.position == player1.choosed_pawn)
 									{
 										
-										el.setPosition(cursor.field_coord_clamp.x, cursor.field_coord_clamp.y);
+										el.setPosition(cursor.field_coord_clamp);
 										for (auto& el_2 : b.player_2)
 										{
-											if (el_2.x == el.x and el_2.y == el.y)
+											if (el_2.position == el.position)
 											{
 												el.setPosition_as_white();
 												el_2.setPosition_as_black();

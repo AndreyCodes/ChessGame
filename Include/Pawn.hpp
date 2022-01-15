@@ -11,7 +11,7 @@ struct Pawn : IRenderable
 		player_2
 	};
 
-	int x, y;
+	sf::Vector2i position;
 	owner_tag owner;
 	sf::RectangleShape representation;
 	Pawn(int x_, int y_, owner_tag ow);
@@ -20,7 +20,7 @@ private:
 	void setPosition(sf::Vector2f v);//set only view position;
 
 public:
-	void setPosition(int x_, int y_); // set view and logic position
+	void setPosition(sf::Vector2i pos); // set view and logic position
 
 	void setPosition_as_white();
 	void setPosition_as_black();
