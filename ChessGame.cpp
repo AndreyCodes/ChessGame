@@ -32,7 +32,7 @@ int main()
 	ai_player ai(b);
 
 
-
+	bool cheat = false;
 	while (window.isOpen())
 	{
 		sf::Event ev;
@@ -180,7 +180,11 @@ int main()
 
 
 						render.remove_UI_helpers();
-						player1.available_ways.clear();
+
+						if (!cheat)
+						{
+							player1.available_ways.clear();
+						}
 						if (b.checkWinner())
 						{
 							current_state = state::win_pl1;
@@ -296,7 +300,7 @@ int main()
 
 
 		render.update();
-		b.debug();
+		//b.debug();
 
 	}
 }
