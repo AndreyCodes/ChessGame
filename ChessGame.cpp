@@ -29,107 +29,7 @@ int main()
 	}player1;
 
 
-	struct ai_player
-	{
-		ai_player(Board& ref_): ref{ref_}{}
-		std::pair<Pawn*, std::vector<sf::Vector2i>>* choosed_pawn;
-		std::vector < std::pair<Pawn*, std::vector<sf::Vector2i>>> available_ways;
-		Board& ref;
-		void choosePawn()
-		{
-			if (available_ways.size() != 9)
-			{
-				available_ways.reserve(9);
-				for (auto& p : ref.player_2)
-				{
-					available_ways.push_back({ &p,{} });
-				}
-			}
-
-			auto test = [this](std::pair<Pawn*, std::vector<sf::Vector2i>>& p)
-			{
-
-				int x = p.first->position.x;
-				int y = p.first->position.y;
-				//можно ли ходить на право
-				if (x + 1 <= 7)
-				{
-					//можно ли поставить пешку справа
-					if (ref.space[x + 1][y].player_2 != 1)
-					{
-						p.second.push_back({ x + 1,y });
-					}
-				}
-				//можнно ли ходить на лево
-				if (x - 1 >= 0)
-				{
-					if (ref.space[x - 1][y].player_2 != 1)
-					{
-						p.second.push_back({ x - 1,y });
-					}
-				}
-				//можно ли ходить на верх
-				if (y + 1 <= 7)
-				{
-					if (ref.space[x][y + 1].player_2 != 1)
-					{
-						p.second.push_back({ x,y + 1 });
-					}
-				}
-				//можно ли ходить вниз
-				if (y - 1 >= 0)
-				{
-					if (ref.space[x][y - 1].player_2 != 1)
-					{
-						p.second.push_back({ x,y - 1 });
-					}
-				}
-			};
-
-			for (auto& el : available_ways)
-			{
-				el.second.clear();
-			}//
-			std::for_each(available_ways.begin(), available_ways.end(), test);
-			
-			auto select_pawn = [this]
-			{
-				
-				for (auto& el : available_ways)
-				{
-					for (auto& way : el.second)
-					{
-						for (int i = 0; i < 8; ++i)
-						{
-							for (int j = 0; j < 8; ++j)
-							{
-								if (ref.space[i][j].player_1 == 1 and way.x == i and way.y == j)//для читаемости
-								{
-									return &el;
-								}
-							}
-						}
-					}
-				}
-				//else
-				std::random_device rd;
-				while (true)
-				{
-					auto pawn_id = rd() % 9;
-					if (!available_ways[pawn_id].second.empty())
-					{
-						return &available_ways[pawn_id];
-					}
-
-				}
-
-			};
-
-			choosed_pawn = select_pawn();
-
-		}
-
-	}ai(b);
+	ai_player ai(b);
 
 
 
@@ -323,11 +223,32 @@ int main()
 				}
 			}
 
+			auto random_way_nomer = [rd = std::random_device()](decltype(ai.choosed_pawn)& pawn) mutable
+			{
+				int res;
+				int modul = pawn->second.size();
+				return rd() % modul;
+			};
+
+
+			int random_selected_way = random_way_nomer(ai.choosed_pawn);
 			b.space_cell(ai.choosed_pawn->first->position).player_2 = 0;
-			b.space_cell(ai.choosed_pawn->second.front()).player_2 = 1;
+			if (b.space_cell(ai.choosed_pawn->first->position).player_1 == 1)
+			{
+				//находим эту пешку в списке и восстанавливаем позицию спрайта
+				for (auto& el : b.player_1)
+				{
+					if (el.position == ai.choosed_pawn->first->position)
+					{
+						el.setPosition_as_default();
+						break;
+					}
+				}
+			}
+			b.space_cell(ai.choosed_pawn->second[random_selected_way]).player_2 = 1;
 
 
-			ai.choosed_pawn->first->setPosition(ai.choosed_pawn->second.front());//not best way ???
+			ai.choosed_pawn->first->setPosition(ai.choosed_pawn->second[random_selected_way]);//not best way ???
 			b.space_cell(ai.choosed_pawn->first->position).player_2 = 1;
 			if (b.space_cell(ai.choosed_pawn->first->position).player_1 == 1)
 			{
@@ -363,7 +284,7 @@ int main()
 		}
 		case state::win_pl2:
 		{
-			auto e = new  EndingSprite(EndingSprite::type::lost);
+			auto e = new EndingSprite(EndingSprite::type::lost);
 			render.add(*e);
 			current_state = state::end;
 			break;
