@@ -39,6 +39,10 @@ void RenderSystem::add_UI_helper(int x, int y, UI_helperCell::color c)
 {
 	UI_helpers.emplace_back(x, y, c);
 }
+void RenderSystem::add_UI_helper(sf::Vector2i pos, UI_helperCell::color c)
+{
+	UI_helpers.emplace_back(pos.x, pos.y, c);
+}
 
 void RenderSystem::remove_UI_helpers()
 {

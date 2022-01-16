@@ -13,10 +13,10 @@ struct Pawn : IRenderable
 
 	sf::Vector2i position;
 	owner_tag owner;
-	sf::RectangleShape representation;
 	Pawn(int x_, int y_, owner_tag ow);
 
 private:
+	sf::RectangleShape representation;
 	void setPosition(sf::Vector2f v);//set only view position;
 
 public:
@@ -28,6 +28,7 @@ public:
 
 	operator sf::Drawable& () override;
 
+private:
 	const static inline sf::Vector2f position_offset{ 32,8 };
 	const static inline sf::Vector2f position_offset_black{ -10,0 };
 	const static inline sf::Vector2f position_offset_white{ 10,0 };

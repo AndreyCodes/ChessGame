@@ -5,8 +5,10 @@
 
 struct UI_helperCell : IRenderable
 {
+private:
 	sf::RectangleShape representation;
 	sf::Texture texture;
+public:
 	enum class color
 	{
 		green,

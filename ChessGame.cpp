@@ -54,9 +54,9 @@ int main()
 					{
 						if (b.space_cell(cursor.field_coord_clamp).player_1 == 1)//==1 излишне, но для читаемости
 						{
-							for (int i = 0; i < b.player_1.size(); ++i)
+							for (int i = 0; i < b.player_1.size(); ++i) //ищем пешку, на которую наведен курсор
 							{
-								if (b.player_1[i].position == cursor.field_coord_clamp)//Мышь наведена на i пешку
+								if (b.player_1[i].position == cursor.field_coord_clamp)//курсор наведена на i пешку
 								{
 									render.add_UI_helper(UI_helperCell(cursor.field_coord_clamp.x, cursor.field_coord_clamp.y, UI_helperCell::color::yellow));//Создаем подсказку, какую пешку выбрал игрок
 									player1.choosed_pawn = cursor.field_coord_clamp;
@@ -101,7 +101,7 @@ int main()
 												player1.available_ways.push_back({ x,y - 1 });
 											}
 										}
-									}; find_available_ways_for_choosed_pawn();//Проверяем.
+									}; find_available_ways_for_choosed_pawn();//Ищем.
 
 									for (auto& el : player1.available_ways)
 									{
@@ -133,12 +133,12 @@ int main()
 
 
 						bool correct_click = false;
-						for (int i = 0; i < player1.available_ways.size(); ++i)
+						for (int i = 0; i < player1.available_ways.size(); ++i)//среди доступных клеток для хода ищем ту, на которую наведен курсор. Если курсор не наведен, то заново запускаем.
 						{
 							if (cursor.field_coord_clamp == player1.available_ways[i])//нашли куда перемещать пешку
 							{
 								correct_click = true;
-								for (auto& el : b.player_2)//Восстанавливаем позицию текстуры у чужой пешки, если она стоит в той же, что и выбранная для перемещения
+								for (auto& el : b.player_2)//Восстанавливаем позицию спрайта у чужой пешки, если она стоит в той же, что и выбранная для перемещения
 								{
 									if (el.position == player1.choosed_pawn)
 									{
@@ -207,7 +207,7 @@ int main()
 		case state::pl2_choosing_pawn:
 		{
 			ai.choosePawn();
-			render.add_UI_helper(ai.choosed_pawn->first->position.x, ai.choosed_pawn->first->position.y, UI_helperCell::color::yellow);
+			render.add_UI_helper(ai.choosed_pawn->first->position, UI_helperCell::color::yellow);
 			current_state = pl2_choosing_way;
 			break;
 		}
@@ -215,7 +215,7 @@ int main()
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));//emulation of thinking ai
 
-			for (auto& el : b.player_1)//Восстанавливаем положение текстуры пешки, которая стояла вместе;
+			for (auto& el : b.player_1)//Восстанавливаем положение спрайта пешки, которая стояла вместе;
 			{
 				if (el.position == ai.choosed_pawn->first->position)
 				{
@@ -232,7 +232,9 @@ int main()
 
 
 			int random_selected_way = random_way_nomer(ai.choosed_pawn);
+
 			b.space_cell(ai.choosed_pawn->first->position).player_2 = 0;
+
 			if (b.space_cell(ai.choosed_pawn->first->position).player_1 == 1)
 			{
 				//находим эту пешку в списке и восстанавливаем позицию спрайта
@@ -248,7 +250,7 @@ int main()
 			b.space_cell(ai.choosed_pawn->second[random_selected_way]).player_2 = 1;
 
 
-			ai.choosed_pawn->first->setPosition(ai.choosed_pawn->second[random_selected_way]);//not best way ???
+			ai.choosed_pawn->first->setPosition(ai.choosed_pawn->second[random_selected_way]);
 			b.space_cell(ai.choosed_pawn->first->position).player_2 = 1;
 			if (b.space_cell(ai.choosed_pawn->first->position).player_1 == 1)
 			{

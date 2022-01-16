@@ -6,7 +6,7 @@
 
 struct RenderSystem
 {
-protected:
+private:
 	std::vector<IRenderable*> objs;
 	std::vector<UI_helperCell> UI_helpers;
 	IRenderable* board_sprite;
@@ -23,6 +23,7 @@ public:
 	
 	void add_UI_helper(UI_helperCell some);
 	void add_UI_helper(int x, int y, UI_helperCell::color c);//emplace construct
+	void add_UI_helper(sf::Vector2i pos, UI_helperCell::color c);
 
 	void remove_UI_helpers();
 

@@ -21,7 +21,7 @@ public:
 	std::vector<Pawn> player_1;
 	std::vector<Pawn> player_2;
 
-
+private:
 	sf::Sprite board_sprite;
 	sf::Texture board_texture;
 

@@ -3,8 +3,10 @@
 
 struct EndingSprite : IRenderable
 {
+private:
 	sf::Sprite sprite;
 	sf::Texture texture;
+public:
 	enum class type
 	{
 		lost,
