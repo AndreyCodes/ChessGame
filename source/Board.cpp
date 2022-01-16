@@ -1,5 +1,6 @@
 #include"../Include/Board.hpp"
-#include<iostream>
+
+//#include<iostream>
 Board::Board(RenderSystem& render)
 {
 	sf::Texture t; t.loadFromFile("gamedata/Board.png");
@@ -73,6 +74,7 @@ Board::operator sf::Drawable& ()
 {
 	return board_sprite;
 }
+/*
 void Board::debug()
 {
 	std::cout << '\f';
@@ -92,3 +94,4 @@ void Board::debug()
 
 }
 
+*/
