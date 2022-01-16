@@ -15,9 +15,12 @@ int main()
 		pl1_choosing_way,
 		pl2_choosing_pawn,
 		pl2_choosing_way,
-		finish,
+		win_pl1,
+		win_pl2,
+		end,
 	};
 	state current_state = state::pl1_choosing_pawn;
+	//state current_state = state::pl2_choosing_pawn;
 
 	struct player
 	{
@@ -280,7 +283,7 @@ int main()
 						player1.available_ways.clear();
 						if (b.checkWinner())
 						{
-							current_state = state::finish;
+							current_state = state::win_pl1;
 						}
 						else
 						{
@@ -333,7 +336,36 @@ int main()
 
 
 			render.remove_UI_helpers();
-			current_state = pl1_choosing_pawn;
+
+			if (b.checkWinner())
+			{
+				current_state = state::win_pl2;
+			}
+			else
+			{
+				current_state = state::pl1_choosing_pawn;//
+			}
+
+
+
+			break;
+		}
+		}
+
+		switch (current_state)
+		{
+		case state::win_pl1:
+		{
+			auto e = new EndingSprite(EndingSprite::type::win);
+			render.add(*e);
+			current_state = state::end;
+			break;
+		}
+		case state::win_pl2:
+		{
+			auto e = new  EndingSprite(EndingSprite::type::lost);
+			render.add(*e);
+			current_state = state::end;
 			break;
 		}
 		}

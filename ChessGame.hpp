@@ -13,3 +13,4 @@
 #include"Include/Pawn.hpp"
 #include"Include/RenderSystem.hpp"
 #include"Include/UI_helper.hpp"
+#include"Include/EndingSprite.hpp"
