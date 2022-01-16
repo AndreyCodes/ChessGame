@@ -9,3 +9,8 @@ add_executable (ChessGame "ChessGame.cpp" "ChessGame.hpp" "Include/IRenderable.h
 target_link_libraries(ChessGame PRIVATE sfml-system sfml-network sfml-graphics sfml-window)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/gamedata DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+foreach(lib ${SFML_LIBS})
+      get_target_property(lib_path ${lib} LOCATION)
+      file(COPY ${lib_path} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+endforeach()
