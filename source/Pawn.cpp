@@ -24,7 +24,7 @@ void Pawn::setPosition(sf::Vector2f v)//set only view position
 void Pawn::setPosition(sf::Vector2i pos) // set view and logic position
 {
 	position = pos;
-	setPosition(sf::Vector2f(pos) * (float)sizes::size_of_cell);//
+	setPosition(sf::Vector2f(pos) * (float)sizes::size_of_cell);
 }
 
 void Pawn::setPosition_as_white()

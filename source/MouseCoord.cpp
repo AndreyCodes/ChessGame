@@ -5,7 +5,7 @@
 MouseCoord::MouseCoord(sf::RenderWindow& ref)
 {
 	raw = sf::Mouse::getPosition(ref);
-	field_coord = (raw - offset) / sizes::size_of_cell;//pole 1008x1008
+	field_coord = (raw - offset) / sizes::size_of_cell;
 	discrete = field_coord * sizes::size_of_cell;
 	field_coord_clamp = [this]
 	{

@@ -32,7 +32,7 @@ Board::Board(RenderSystem& render)
 		render.add(player_1[i]);
 		render.add(player_2[i]);
 	}
-	//todo->
+
 
 }
 
@@ -56,7 +56,7 @@ bool Board::checkWinner()
 	{
 		return true;
 	}
-	else///для максимальной читамости
+	else//дли читаемости.
 	{
 		return false;
 	}
