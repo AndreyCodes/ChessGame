@@ -118,7 +118,7 @@ int main()
 
 								for (auto& el : player1.available_ways)
 								{
-									render.add_UI_helper(UI_helperCell(el.x, el.y, UI_helperCell::color::green));//добавляем подсказки для доступных ходов
+									render.add_UI_helper(el, UI_helperCell::color::green);//добавляем подсказки для доступных ходов
 								}
 								current_state = state::pl1_choosing_way;
 						}
@@ -205,8 +205,6 @@ int main()
 			}
 
 
-
-
 			auto random_way_nomer = [rd = std::random_device()](decltype(ai.choosed_pawn)& pawn) mutable
 			{
 				int res;
@@ -242,7 +240,6 @@ int main()
 
 			}
 
-
 			render.remove_UI_helpers();
 
 			if (b.checkWinner())
@@ -253,13 +250,9 @@ int main()
 			{
 				current_state = state::pl1_choosing_pawn;//
 			}
-
-
-
 			break;
 		}
 		}
-
 		switch (current_state)
 		{
 		case state::win_pl1:
@@ -277,11 +270,6 @@ int main()
 			break;
 		}
 		}
-
-
-
 		render.update();
-		//b.debug();
-
 	}
 }
