@@ -22,23 +22,7 @@ int main()
 	state current_state = state::pl1_choosing_pawn;
 	//state current_state = state::pl2_choosing_pawn;
 
-	struct player
-	{
-		sf::Vector2i choosed_pawn;
-		std::vector<sf::Vector2i> available_ways;//Ходы, куда может игрок пойти
-		bool HasAvailableWayWithCoord(sf::Vector2i v)
-		{
-			for (int i = 0; i < available_ways.size(); ++i)
-			{
-				if (v == available_ways[i])
-				{
-					return true;
-				}
-			}
-			return false;
-		}
-	}player1;
-
+	local_player player1;
 
 	ai_player ai(b);
 
@@ -77,44 +61,7 @@ int main()
 								player1.choosed_pawn = cursor.field_coord_clamp;
 
 								//test available ways
-								auto find_available_ways_for_choosed_pawn = [&b, &player1]
-								{
-									int x = player1.choosed_pawn.x;
-									int y = player1.choosed_pawn.y;
-									//можно ли ходить на право
-									if (x + 1 <= 7)
-									{
-										//можно ли поставить пешку справа
-										if (b.space[x + 1][y].player_1 != 1)
-										{
-											player1.available_ways.push_back({ x + 1,y });
-										}
-									}
-									//можнно ли ходить на лево
-									if (x - 1 >= 0)
-									{
-										if (b.space[x - 1][y].player_1 != 1)
-										{
-											player1.available_ways.push_back({ x - 1,y });
-										}
-									}
-									//можно ли ходить на верх
-									if (y + 1 <= 7)
-									{
-										if (b.space[x][y + 1].player_1 != 1)
-										{
-											player1.available_ways.push_back({ x,y + 1 });
-										}
-									}
-									//можно ли ходить вниз
-									if (y - 1 >= 0)
-									{
-										if (b.space[x][y - 1].player_1 != 1)
-										{
-											player1.available_ways.push_back({ x,y - 1 });
-										}
-									}
-								}; find_available_ways_for_choosed_pawn();//Ищем.
+								player1.FindAvailableWaysForChoosedPawn(b);
 
 								for (auto& el : player1.available_ways)
 								{

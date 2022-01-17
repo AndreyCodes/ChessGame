@@ -15,3 +15,4 @@
 #include"Include/UI_helper.hpp"
 #include"Include/EndingSprite.hpp"
 #include"Include/AI_player.hpp"
+#include"Include/Local_player.hpp"
