@@ -44,6 +44,13 @@ int main()
 			{
 				window.close();
 			}
+			if (ev.type == sf::Event::EventType::KeyPressed)
+			{
+				if (ev.key.code == sf::Keyboard::Key::F9)
+				{
+					cheat = true;
+				}
+			}
 			switch (current_state)
 			{
 			case state::pl1_choosing_pawn:
@@ -259,6 +266,15 @@ int main()
 			if (b.space_cell(ai.choosed_pawn->first->position).player_1 == 1)
 			{
 				ai.choosed_pawn->first->setPosition_as_black();
+
+				for (auto& el : b.player_1)
+				{
+					if (el.position == ai.choosed_pawn->first->position)
+					{
+						el.setPosition_as_white();
+						break;
+					}
+				}
 			}
 
 
