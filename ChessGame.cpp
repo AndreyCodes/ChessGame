@@ -54,7 +54,7 @@ int main()
 				{
 					if (ev.mouseButton.button == sf::Mouse::Button::Left)
 					{
-						if (b.space_cell(cursor.field_coord_clamp).player_1 == 1)//==1 излишне, но для читаемости
+						if (b.space_cell(cursor.field_coord_clamp).player_1 == 1)
 						{
 
 								render.add_UI_helper(cursor.field_coord_clamp, UI_helperCell::color::yellow);//Создаем подсказку, какую пешку выбрал игрок

@@ -56,7 +56,7 @@ bool Board::checkWinner()
 	{
 		return true;
 	}
-	else//дли читаемости.
+	else
 	{
 		return false;
 	}

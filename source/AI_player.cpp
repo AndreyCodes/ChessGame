@@ -72,7 +72,7 @@ void ai_player::choosePawn()
 				{
 					for (int j = 0; j < 8; ++j)
 					{
-						if (ref.space[i][j].player_1 == 1 and way.x == i and way.y == j)//для читаемости
+						if (ref.space[i][j].player_1 == 1 and way.x == i and way.y == j)
 						{
 							return &el;
 						}

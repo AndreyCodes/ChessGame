@@ -64,7 +64,7 @@ void RenderSystem::remove(IRenderable& some)
 			return;
 		}
 	}
-	for (int i = 0; i < UI_helpers.size(); ++i)//shoul deprecate
+	for (int i = 0; i < UI_helpers.size(); ++i)//should deprecate
 	{
 		if (&UI_helpers[i] == &some)
 		{
