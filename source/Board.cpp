@@ -9,8 +9,8 @@ Board::Board(RenderSystem& render)
 	render.setBoardTexture(*this);
 
 
-	player_1.reserve(8);
-	player_2.reserve(8);
+	player_1.reserve(9);
+	player_2.reserve(9);
 	for (int i = 5; i <= 7; ++i)
 	{
 		for (int j = 5; j <= 7; ++j)

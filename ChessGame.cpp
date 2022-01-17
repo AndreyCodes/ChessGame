@@ -71,7 +71,7 @@ int main()
 						}
 					}
 				}
-				break;//выхода из case
+				break;
 			}
 			case state::pl1_choosing_way:
 			{
@@ -84,7 +84,7 @@ int main()
 							render.remove_UI_helpers();
 							player1.available_ways.clear();
 							current_state = state::pl1_choosing_pawn;
-							break;//выход из case
+							break;
 						}
 						if (player1.HasAvailableWayWithCoord(cursor.field_coord_clamp))
 						{

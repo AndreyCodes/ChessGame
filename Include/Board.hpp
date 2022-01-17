@@ -18,11 +18,10 @@ private:
 	};
 public:
 	Cell space[8][8];
-	
-	std::vector<Pawn> player_1;
-	std::vector<Pawn> player_2;
 
 private:
+	std::vector<Pawn> player_1;
+	std::vector<Pawn> player_2;
 	sf::Sprite board_sprite;
 	sf::Texture board_texture;
 
@@ -35,4 +34,5 @@ public:
 	std::optional<std::reference_wrapper<Pawn>> getPlayer_2_PawnOnPosition(sf::Vector2i v);
 	operator sf::Drawable& () override;
 	void debug();
+	friend class ai_player;
 };
