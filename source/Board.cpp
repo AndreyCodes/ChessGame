@@ -74,6 +74,33 @@ Board::operator sf::Drawable& ()
 {
 	return board_sprite;
 }
+
+
+std::optional<std::reference_wrapper<Pawn>> Board::getPlayer_1_PawnOnPosition(sf::Vector2i v)
+{
+	for (auto& el : player_1)
+	{
+		if (el.position == v)
+		{
+			return std::optional(std::ref(el));
+		}
+	}
+	return std::nullopt;
+}
+std::optional<std::reference_wrapper<Pawn>> Board::getPlayer_2_PawnOnPosition(sf::Vector2i v)
+{
+	for (auto& el : player_2)
+	{
+		if (el.position == v)
+		{
+			return std::optional(std::ref(el));
+		}
+	}
+	return std::nullopt;
+}
+
+
+
 /*
 void Board::debug()
 {

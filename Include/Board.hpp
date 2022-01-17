@@ -1,6 +1,7 @@
 #pragma once
 #include<vector>
 #include<SFML/Graphics.hpp>
+#include<optional>
 
 #include"IRenderable.hpp"
 #include"Pawn.hpp"
@@ -29,6 +30,9 @@ public:
 	Board(RenderSystem& render);
 	bool checkWinner();
 	Cell& space_cell(sf::Vector2i);
+
+	std::optional<std::reference_wrapper<Pawn>> getPlayer_1_PawnOnPosition(sf::Vector2i v);
+	std::optional<std::reference_wrapper<Pawn>> getPlayer_2_PawnOnPosition(sf::Vector2i v);
 	operator sf::Drawable& () override;
 	void debug();
 };

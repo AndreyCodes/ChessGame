@@ -11,5 +11,11 @@ struct ai_player
 
 	ai_player(Board& ref_);
 	void choosePawn();
+	void moveSelectedPawn(int num_of_available_way);
+
+	sf::Vector2i getChoosedPawnPos();
+
+	Pawn& getChoosedPawnObj();
+
 
 };

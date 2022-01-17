@@ -97,3 +97,19 @@ void ai_player::choosePawn()
 	choosed_pawn = select_pawn();
 
 }
+
+void ai_player::moveSelectedPawn(int num_of_available_way)
+{
+	choosed_pawn->first->setPosition(choosed_pawn->second[num_of_available_way]);
+}
+
+sf::Vector2i ai_player::getChoosedPawnPos()
+{
+	return choosed_pawn->first->position;
+}
+
+Pawn& ai_player::getChoosedPawnObj()
+{
+	return *choosed_pawn->first;
+}
+
